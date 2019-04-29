@@ -13,13 +13,13 @@ public class Producer implements Runnable {
 	private int startId;
 	private int endId;
 	private int dbBatch;
-	
+
 	public Producer(BlockingQueue<QueryRange> queue, int startId, int totalRecords, int dbBatch) {
 		this.queue = queue;
 		this.startId = startId;
 		this.endId = totalRecords;
 		this.dbBatch = dbBatch;
-		
+
 	}
 
 	@Override
@@ -27,16 +27,18 @@ public class Producer implements Runnable {
 
 		long starttime = System.currentTimeMillis();
 		try {
-			while(startId < endId) {
-				QueryRange range = new QueryRange(startId, (startId + dbBatch -1));
-				//put this range in queue
+			while (startId <= endId) {
+				QueryRange range = new QueryRange(startId, dbBatch); // put this
+																		// range
+																		// in
+																		// queue
 				queue.put(range);
 				LOGGER.info("Range added in queue is startId: {} & endId : {}", range.getStartId(), range.getEndId());
 				startId = startId + dbBatch;
 			}
-			
-			//Pushing terminating condition
-			//queue.put(new QueryRange(-1,-1));
+
+			// Pushing terminating condition
+			// queue.put(new QueryRange(-1,-1));
 		} catch (Exception e) {
 			LOGGER.error("Exception occured in migration script producer: ", e);
 		} finally {

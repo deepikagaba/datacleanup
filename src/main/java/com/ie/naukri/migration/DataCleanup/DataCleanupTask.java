@@ -51,6 +51,7 @@ public class DataCleanupTask implements Callable<List<TUpdateResult>> {
 					Thread.currentThread().getId());
 
 			List<String> residId = getResid(startId, endId);
+			
 			List<TUpdateResult> results = new ArrayList<>();// callUpdateCalAPI(residId);
 
 			LOGGER.info("Total number of records successfully processed till now: {}", counter.get());
@@ -78,8 +79,8 @@ public class DataCleanupTask implements Callable<List<TUpdateResult>> {
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		con = DriverManager.getConnection("jdbc:mysql://172.10.113.176:/test?zeroDateTimeBehavior=convertToNull",
-				"pushdownStaging", "pushStagingJX49t");
+		con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/resman5?zeroDateTimeBehavior=convertToNull",
+				"root", "Km7Iv80l");
 
 		ps = con.prepareStatement(sql);
 		ResultSet rs = null;
