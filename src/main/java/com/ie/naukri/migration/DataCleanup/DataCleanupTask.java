@@ -112,7 +112,7 @@ public class DataCleanupTask implements Callable<List<TUpdateResult>> {
 		TTransport transport = null;
 		try {
 			// transport = new TSocket("192.168.40.139", 7915); // Test5 config
-			transport = new TSocket("172.10.115.103", 7915);
+			transport = new TSocket("10.10.130.60", 9182);
 			transport.open();
 			TProtocol protocol = new TBinaryProtocol(transport);
 			updateResumeClient = new TUpdateResume.Client(protocol);

@@ -17,8 +17,6 @@ public class DataCleanup {
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, SQLException, InterruptedException {
-		LOGGER.info("Migration script started");
-		long starttime = System.currentTimeMillis();
 
 		int startId = Integer.parseInt(args[0]);
 		int endId = Integer.parseInt(args[1]);
@@ -26,18 +24,21 @@ public class DataCleanup {
 		int threadsInConsumer = Integer.parseInt(args[3]);
 
 		int capacity = 50;
+		try {
+			BlockingQueue<QueryRange> queue = new ArrayBlockingQueue<>(capacity);
 
-		BlockingQueue<QueryRange> queue = new ArrayBlockingQueue<>(capacity);
+			ExecutorService producerExecutor = Executors.newFixedThreadPool(1);
+			producerExecutor.submit(new Producer(queue, startId, endId, dbBatch));
 
-		ExecutorService producerExecutor = Executors.newFixedThreadPool(1);
-		producerExecutor.submit(new Producer(queue, startId, endId, dbBatch));
+			ExecutorService consumerExecutor = Executors.newFixedThreadPool(threadsInConsumer);
+			for (int i = 0; i < threadsInConsumer; i++) {
+				DataCleanupTask taskGenerateAlias = new DataCleanupTask(queue, counter, endId);
+				consumerExecutor.submit(taskGenerateAlias);
+			}
 
-		ExecutorService consumerExecutor = Executors.newFixedThreadPool(threadsInConsumer);
-		for (int i = 0; i < threadsInConsumer; i++) {
-			DataCleanupTask taskGenerateAlias = new DataCleanupTask(queue, counter, endId);
-			consumerExecutor.submit(taskGenerateAlias);
+		} catch (Exception e) {
+			LOGGER.error("Exception occured in cache cleaning script: ", e);
 		}
-
 	}
 
 }
