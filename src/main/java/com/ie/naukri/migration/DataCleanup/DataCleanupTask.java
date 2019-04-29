@@ -51,8 +51,8 @@ public class DataCleanupTask implements Callable<List<TUpdateResult>> {
 					Thread.currentThread().getId());
 
 			List<String> residId = getResid(startId, endId);
-			
-			List<TUpdateResult> results = new ArrayList<>();// callUpdateCalAPI(residId);
+
+			List<TUpdateResult> results = callUpdateCalAPI(residId);
 
 			LOGGER.info("Total number of records successfully processed till now: {}", counter.get());
 			LOGGER.info("Size of resultList is: {} for threadId : {}", results.size(), Thread.currentThread().getId());
@@ -72,7 +72,7 @@ public class DataCleanupTask implements Callable<List<TUpdateResult>> {
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		ArrayList<String> lstResid = new ArrayList<String>();
 
-		String sql = "Select residupd as RESID from residbkp LIMIT " + startid + ", " + batch + ";";
+		String sql = "Select residupd as RESID from resid2804 LIMIT " + startid + ", " + batch + ";";
 		LOGGER.info("SQL:: " + sql);
 
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -90,6 +90,7 @@ public class DataCleanupTask implements Callable<List<TUpdateResult>> {
 				String resid = rs.getString("RESID");
 				lstResid.add(resid);
 			}
+			LOGGER.info(lstResid.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,6 +140,8 @@ public class DataCleanupTask implements Callable<List<TUpdateResult>> {
 
 				LOGGER.info("Response added in resultList for ThreadId : {} and userId : {}",
 						Thread.currentThread().getId(), rid);
+				counter.incrementAndGet();
+
 			} catch (Exception e) {
 				FAILURE.error("Alias API failed for userId : {}", userId);
 				LOGGER.error("Generate Alias API calling failed for ThreadId : {} and userId : {} with exception : {}",
