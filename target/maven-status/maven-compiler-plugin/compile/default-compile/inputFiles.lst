@@ -1,1 +1,4 @@
-/home/deepika/workspace/DataCleanup/src/main/java/com/ie/naukri/migration/DataCleanup/CSVReader.java
+/home/deepika/workspace/DataCleanupProfileInfo/src/main/java/com/ie/naukri/migration/DataCleanup/DataCleanup.java
+/home/deepika/workspace/DataCleanupProfileInfo/src/main/java/com/ie/naukri/migration/DataCleanup/Producer.java
+/home/deepika/workspace/DataCleanupProfileInfo/src/main/java/com/ie/naukri/migration/DataCleanup/QueryRange.java
+/home/deepika/workspace/DataCleanupProfileInfo/src/main/java/com/ie/naukri/migration/DataCleanup/DataCleanupTask.java

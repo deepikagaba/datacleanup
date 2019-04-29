@@ -1,1 +1,4 @@
-com/ie/naukri/migration/DataCleanup/CSVReader.class
+com/ie/naukri/migration/DataCleanup/Producer.class
+com/ie/naukri/migration/DataCleanup/QueryRange.class
+com/ie/naukri/migration/DataCleanup/DataCleanup.class
+com/ie/naukri/migration/DataCleanup/DataCleanupTask.class

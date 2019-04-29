@@ -51,7 +51,7 @@ public class DataCleanupTask implements Callable<List<TUpdateResult>> {
 					Thread.currentThread().getId());
 
 			List<String> residId = getResid(startId, endId);
-			List<TUpdateResult> results = callUpdateCalAPI(residId);
+			List<TUpdateResult> results = new ArrayList<>();// callUpdateCalAPI(residId);
 
 			LOGGER.info("Total number of records successfully processed till now: {}", counter.get());
 			LOGGER.info("Size of resultList is: {} for threadId : {}", results.size(), Thread.currentThread().getId());
