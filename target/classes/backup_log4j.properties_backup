@@ -1,0 +1,28 @@
+# Root logger option
+
+log4j.rootLogger=INFO, file, stdout
+#log4j.rootLogger=INFO, file
+
+# Direct log messages to stdout
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern="%d{DATE} [%t] %-5p %c %x - %m%n"
+
+# Direct log messages to a log file
+
+log4j.appender.file=org.apache.log4j.FileAppender
+log4j.appender.file.File=/home/service/service/EmailAliasMigration/EmailAliasScript.log
+log4j.appender.file.ImmediateFlush=true
+log4j.appender.file.Threshold=debug
+log4j.appender.file.Append=false
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.conversionPattern="%d{DATE} %-5p %c %x - %m%n"
+
+log4j.appender.MigrationFailureLogger=org.apache.log4j.FileAppender
+log4j.appender.MigrationFailureLogger.File=/home/service/service/EmailAliasMigration/MigrationFailureLogger.log
+log4j.appender.MigrationFailureLogger.ImmediateFlush=true
+log4j.appender.MigrationFailureLogger.Threshold=debug
+log4j.appender.MigrationFailureLogger.Append=false
+log4j.appender.MigrationFailureLogger.layout=org.apache.log4j.PatternLayout
+log4j.appender.MigrationFailureLogger.layout.conversionPattern="%d{DATE} %-5p %c %x - %m%n"

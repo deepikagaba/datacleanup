@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- version="1.0.0" -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- ======================= -->
+	<!-- Setup the Appenders -->
+	<!-- ======================= -->
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<param name="File" value="/home/service/service/DataCleanup/console.log" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{DATE} [%t] %-5p %c %x - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="async_console" class="org.apache.log4j.AsyncAppender">
+		<appender-ref ref="console" />
+	</appender>
+
+	<appender name="cleanupinfo" class="org.apache.log4j.FileAppender">
+		<param name="File" value="/home/service/service/DataCleanup/info.log" />
+		<param name="Threshold" value="debug" />
+		<param name="Append" value="false" />
+		<param name="ImmediateFlush" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{DATE} %-5p %c %x - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="async_cleanupinfo" class="org.apache.log4j.AsyncAppender">
+		<appender-ref ref="cleanupinfo" />
+	</appender>
+
+	<appender name="cleanupFailure" class="org.apache.log4j.FileAppender">
+		<param name="File" value="/home/service/service/DataCleanup/error.log" />
+		<param name="Threshold" value="debug" />
+		<param name="Append" value="false" />
+		<param name="ImmediateFlush" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{DATE} %-5p %c %x - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="async_cleanupFailure" class="org.apache.log4j.AsyncAppender">
+		<appender-ref ref="cleanup" />
+	</appender>
+
+	<logger name="FailureLogger" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="async_cleanupFailure" />
+	</logger>
+
+	<!-- ======================= -->
+	<!-- Setup the Root logger -->
+	<!-- ======================= -->
+	<root>
+		<priority value="INFO" />
+
+		<appender-ref ref="async_console" />
+		<appender-ref ref="async_cleanupinfo" />
+	</root>
+
+</log4j:configuration>
